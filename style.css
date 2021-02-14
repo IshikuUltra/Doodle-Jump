@@ -1,0 +1,26 @@
+body {
+    background-color: black;
+    margin: 0;
+}
+
+.grid {
+    width:400px;
+    height: 95vh;
+    background: url("https://raw.githubusercontent.com/kubowania/Doodle-Jump/master/background.png");
+    position: relative;
+    left: 20%;
+}
+
+.doodler {
+    width: 86px;
+    height: 85px; 
+    background: url("https://raw.githubusercontent.com/kubowania/Doodle-Jump/master/doodler-guy.png");
+    position: absolute;
+}
+
+.platform {
+    width: 85px; /*this factors into this.left -> 315+85=400 (width of grid)*/
+    height: 15px;
+    background: url("https://raw.githubusercontent.com/kubowania/Doodle-Jump/master/platform.png");
+    position: absolute;
+}
