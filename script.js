@@ -19,11 +19,11 @@
         doodler.classList.add('doodler');
         doodlerLeftSpace = platforms[0].left;
         doodlerBottomSpace = platforms[0].bottom + 13; 
-        doodler.style.left = doodlerLeftSpace + 'px';
+        doodler.style.left = doodlerLeftSpace + 'px'; // does it read from doodlerLeftSpace the whole program?
         doodler.style.bottom = doodlerBottomSpace + 'px';
     };
 
-    class Platform { 
+    class Platform { // we need to be adding platforms to the grid container not the body
         constructor(newPlatBottom, uniqueId) {
             this.bottom = newPlatBottom;
             this.left = Math.random() * 315;
@@ -67,16 +67,7 @@
             doodler.style.bottom = doodlerBottomSpace + 'px';
             if (doodlerBottomSpace > doodlerBottomSpaceTmp) { 
                 doodlerBottomSpaceTmp += 10; 
-                move = false; 
-
-                platforms.forEach((p) => { 
-                  px0 = p.visual.getBoundingClientRect().left,
-                  px1 = p.visual.getBoundingClientRect().right,
-                  py = p.visual.getBoundingClientRect().top;
-
-                  platformXY[platformXY.length] = {py: [px0, px1]}; // Platform DS
-
-                });             
+                move = false;           
 
                 fall();
             } 
@@ -91,47 +82,27 @@
                 gameOver();
             }
             doodler.style.bottom = (doodlerBottomSpace -= 10) + 'px';
-            // destruct -> getBoundingClientRect?
-            let dx0 = doodler.getBoundingClientRect().left, 
-                dx1 = doodler.getBoundingClientRect().right,
-                dy = doodler.getBoundingClientRect().bottom;
-
-            platforms.forEach(platform => {
-              if(doodlerBottomSpace >= platform.bottom && doodlerBottomSpace <= platform.bottom +15 && doodlerLeftSpace + 60 >= platform.left && doodlerLeftSpace <= platform.left + 85 && !move) {
-                jump();
-              }
-            })
 
         },30);
     };
 
-    // kill the 1 second gap between initital keypress and slide
+    // kill the 1 second gap between initital keypress and move
     function control() {
-        let w = getComputedStyle(grid).width, 
-            d = {32: false},                          
-            x = 15,                          
-            v = doodlerLeftSpace;          
-            // r = doodlerBottomSpace;
-        
-        function newv(v,a,b) { 
-              let n = parseInt(v, 10) - (d[a] ? x : 0) + (d[b] ? x : 0); //this is genius
-              return n < 0 ? 0 : n > w ? w : n;
-            }
+        function move(e) {
+          let leftOrRight = {
+            106: ((parseInt(doodler.style.left, 10)-5)+"px"),
+            108: ((parseInt(doodler.style.left, 10)+5)+"px")
+          };
 
-        function move() { //instead of setInterval, call this function when -> keydown?
-            let doodlerLeftSpace = (v) => {return newv(v, 106, 108)}; //, //left and right (j,l)
-            // doodlerBottomSpace = (r) => {return newv(r, 105, 107)}; // up and down ( i,k )
-            
-            doodler.style.left = doodlerLeftSpace(v)+"px"; 
-            // doodler.style.top = doodlerBottomSpace(r)+"px";
+          // Tests
+          console.assert(typeof ((parseInt(doodler.style.left, 10)+3)+"px") == 'string');
+          console.assert(e.key.charCodeAt() === 106 || e.key.charCodeAt() === 108, {message: "A key was pressed that isn't 106 or 108"});
+          // T-End
+          doodler.style.left = leftOrRight[e.key.charCodeAt()];
+        };
 
-            // reset left and bottom too new position
-            v = doodlerLeftSpace(v);
-            // r = doodlerBottomSpace(r);
-            }
-
-        document.addEventListener("keydown", (function(e) { console.log(d); d[e.key.charCodeAt()] = true; move()}));
-        document.addEventListener("keyup", (function(e) { console.log(d); d[e.key.charCodeAt()] = false; }));
+        document.addEventListener("keydown", move)// while = true
+        document.addEventListener("keyup", console.log('idk'));// on keyup while= false
     };
 
 
