@@ -1,14 +1,14 @@
 body {
     background-color: black;
-    margin: 0;
 }
-
+/*REFACTOR THIS TOO BE RESPONSIVE*/
 .grid {
-    width:400px;
+    width: 400px;
     height: 95vh;
     background: url("https://raw.githubusercontent.com/kubowania/Doodle-Jump/master/background.png");
     position: relative;
-    left: 20%;
+    margin: 1px auto;
+    overflow: hidden;
 }
 
 .doodler {
@@ -16,6 +16,7 @@ body {
     height: 85px; 
     background: url("https://raw.githubusercontent.com/kubowania/Doodle-Jump/master/doodler-guy.png");
     position: absolute;
+    border: 1px solid black;
 }
 
 .platform {
@@ -23,4 +24,9 @@ body {
     height: 15px;
     background: url("https://raw.githubusercontent.com/kubowania/Doodle-Jump/master/platform.png");
     position: absolute;
+    border: 1px solid black;
+}
+
+.score {
+  margin: 10px 15px;
 }
